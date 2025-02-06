@@ -1,0 +1,40 @@
+<nav class="navbar">
+  <div class="navbar-brand">
+    <img src="../../../assets/logo.png" alt="Culinary Quest" class="logo">
+    <span class="brand-name">Mama's Kitchen</span>
+  </div>
+
+  <!-- Cusine dropdown -->
+  <div class="navbar-filters">
+    <div class="dropdown">
+      <button class="dropdown-btn" (click)="toggleDropdown('cuisine')">
+        {{ selectedCuisine }} Cuisine
+        <i class="material-icons">arrow_drop_down</i>
+      </button>
+      <div class="dropdown-content" [class.show]="activeDropdown === 'cuisine'">
+        <a *ngFor="let cuisine of cuisineTypes" 
+           (click)="onCuisineChange(cuisine)"
+           [class.selected]="selectedCuisine === cuisine"
+           href="javascript:void(0)">
+          {{ cuisine }}
+        </a>
+      </div>
+    </div>
+
+    <!-- Sorting Dropdown -->
+    <div class="dropdown">
+      <button class="dropdown-btn" (click)="toggleDropdown('sort')">
+        {{ getSelectedSortLabel() }}
+        <i class="material-icons">arrow_drop_down</i>
+      </button>
+      <div class="dropdown-content" [class.show]="activeDropdown === 'sort'">
+        <a *ngFor="let option of sortOptions" 
+           (click)="onSortChange(option.value)"
+           [class.selected]="selectedSort === option.value"
+           href="javascript:void(0)">
+          {{ option.label }}
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>

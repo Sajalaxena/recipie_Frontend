@@ -1,0 +1,67 @@
+<app-navbar
+  (cuisineSelected)="onCuisineSelected($event)"
+  (sortingChanged)="onSortingChanged($event)">
+</app-navbar>
+
+<div class="hero-section">
+  <h1>Discover Mama's Kitchen</h1>
+  <p>Embark on a flavorful journey with Mama's Kitchen.</p>
+  <button class="get-started-btn">Get Started</button>
+</div>
+
+ <div class="loading-state" *ngIf="isLoading">
+    <img src="assets/images/loading.gif" width="80px" height="80px" alt="Loading...">
+  </div>
+
+<div class="featured-dishes">
+  <h2>Featured Dishes</h2>
+
+    <!-- Add loading indicator -->
+  <div  *ngIf="loading" style="margin-left: 20px;">
+    <img src="../../../assets/foodloading.gif" alt="Loading..."> eta 
+  </div>
+
+  <div class="error-message" *ngIf="error"></div>
+    {{ error }}
+  </div>
+
+    <!-- Show recipes only when not loading and no error -->
+  <div class="recipe-grid" *ngIf="!loading && !error">
+    <div class="recipe-card" *ngFor="let recipe of displayedRecipes">
+      <div class="recipe-image">
+        <img [src]="recipe.image" [alt]="recipe.name">
+      </div>
+      <div class="recipe-content">
+        <h3>{{ recipe.name }}</h3>
+        <p>{{ recipe.description }}</p>
+        <button class="view-details-btn" [routerLink]="['/recipe', recipe.id]">View Details</button>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="pagination">
+    <button 
+      class="pagination-btn"
+      [disabled]="currentPage === 0"
+      (click)="onPageChange(currentPage - 1)">
+      Previous
+    </button>
+    
+    <span class="page-numbers">
+      <button 
+        class="page-number" 
+        *ngFor="let page of getPageNumbers()"
+        [class.active]="page === currentPage + 1"
+        (click)="onPageChange(page - 1)">
+        {{ page }}
+      </button>
+    </span>
+
+    <button 
+      class="pagination-btn"
+      [disabled]="(currentPage + 1) * pageSize >= recipes.length"
+      (click)="onPageChange(currentPage + 1)">
+      Next
+    </button>
+  </div>
